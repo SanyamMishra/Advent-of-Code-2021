@@ -60,9 +60,24 @@ async function readDay5Input(inputType) {
         });
 }
 
+async function readDay8Input(inputType) {
+    let fileData = await fs.readFile(
+        path.join(__dirname, 'src', dayChosen, `input.${inputType}.txt`),
+        { encoding: 'utf8' }
+    );
+
+    return fileData.split('\r\n')
+        .map(data => data.split(' | '))
+        .map(data => ({
+            'signalPatterns': data[0].split(' '),
+            'outputValueSignals': data[1].split(' ')
+        }));
+}
+
 module.exports = {
     readAsArray,
     readAsArrayOfNumbers,
     readDay4Input,
-    readDay5Input
+    readDay5Input,
+    readDay8Input
 };
