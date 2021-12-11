@@ -7,8 +7,9 @@ const inquirer = require('inquirer');
 
 global.dayChosen = null;
 
-function getDayChoices() {
-    return fs.readdir(path.join(__dirname, 'src'));
+async function getDayChoices() {
+    return (await fs.readdir(path.join(__dirname, 'src')))
+        .sort((a, b) => +a.match(/Day (\d+) - .+/)[1] - +b.match(/Day (\d+) - .+/)[1]);
 }
 
 function getDayFromCli(dayChoices) {
@@ -32,6 +33,7 @@ async function dayPrompt(choices) {
             name: 'day',
             message: 'Select a day:',
             choices,
+            pageSize: choices.length
         },
     ]).then(answer => answer.day);
 }
