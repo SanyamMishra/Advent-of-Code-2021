@@ -30,3 +30,6 @@ Start the server
   npm run start
 ```
 
+## Demo
+
+![Demo](demo.gif)
