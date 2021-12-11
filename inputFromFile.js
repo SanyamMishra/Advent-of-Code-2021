@@ -14,6 +14,20 @@ async function readAsArrayOfNumbers(inputType, separator = ',') {
     return (await readAsArray(inputType, separator)).map(element => +element);
 }
 
+async function readAsGrid(inputType, rowSeparator = '\r\n', columnSeparator = '') {
+    const fileData = await fs.readFile(
+        path.join(__dirname, 'src', dayChosen, `input.${inputType}.txt`),
+        { encoding: 'utf8' }
+    );
+
+    return fileData.split(rowSeparator).map(row => row.split(columnSeparator));
+}
+
+async function readAsGridOfNumbers(inputType, rowSeparator = '\r\n', columnSeparator = '') {
+    return (await readAsGrid(inputType, rowSeparator, columnSeparator))
+        .map(row => row.map(element => +element));
+}
+
 async function readDay4Input(inputType) {
     let fileData = await fs.readFile(
         path.join(__dirname, 'src', dayChosen, `input.${inputType}.txt`),
@@ -77,7 +91,9 @@ async function readDay8Input(inputType) {
 module.exports = {
     readAsArray,
     readAsArrayOfNumbers,
+    readAsGrid,
+    readAsGridOfNumbers,
     readDay4Input,
     readDay5Input,
-    readDay8Input
+    readDay8Input,
 };
