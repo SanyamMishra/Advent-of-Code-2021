@@ -115,10 +115,12 @@ async function init() {
     if (partChosen === 'one' || partChosen === 'both') {
         console.log('Part 1:');
         if (inputTypeChosen === 'sample' || inputTypeChosen === 'both') {
-            console.log(`sample answer: ${await quiz.partOne('sample')}`);
+            console.log('sample answer:');
+            console.log(await quiz.partOne('sample'));
         }
         if (inputTypeChosen === 'main' || inputTypeChosen === 'both') {
-            console.log(`main answer: ${await quiz.partOne('main')}`);
+            console.log('main answer:');
+            console.log(await quiz.partOne('main'));
         }
     }
 
@@ -127,10 +129,12 @@ async function init() {
     if (partChosen === 'two' || partChosen === 'both') {
         console.log('Part 2:');
         if (inputTypeChosen === 'sample' || inputTypeChosen === 'both') {
-            console.log(`sample answer: ${await quiz.partTwo('sample')}`);
+            console.log('sample answer:');
+            console.log(await quiz.partTwo('sample'));
         }
         if (inputTypeChosen === 'main' || inputTypeChosen === 'both') {
-            console.log(`main answer: ${await quiz.partTwo('main')}`);
+            console.log('main answer:');
+            console.log(await quiz.partTwo('main'));
         }
     }
 }

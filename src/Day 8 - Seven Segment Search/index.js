@@ -1,4 +1,3 @@
-const { count } = require('yargs');
 const inputFromFile = require('../../inputFromFile');
 
 function deduceProbableNumbers(signal) {
