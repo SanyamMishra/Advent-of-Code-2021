@@ -88,6 +88,36 @@ async function readDay8Input(inputType) {
         }));
 }
 
+async function readDay12Input(inputType) {
+    let fileData = await fs.readFile(
+        path.join(__dirname, 'src', dayChosen, `input.${inputType}.txt`),
+        { encoding: 'utf8' }
+    );
+
+    return fileData.split('\r\n')
+        .reduce((prev, curr) => {
+            const edge = curr.split('-');
+
+            if (edge[0] !== 'end' && edge[1] !== 'start') {
+                if (prev[edge[0]]) {
+                    prev[edge[0]].push(edge[1]);
+                } else {
+                    prev[edge[0]] = [edge[1]];
+                }
+            }
+
+            if (edge[1] !== 'end' && edge[0] !== 'start') {
+                if (prev[edge[1]]) {
+                    prev[edge[1]].push(edge[0]);
+                } else {
+                    prev[edge[1]] = [edge[0]];
+                }
+            }
+
+            return prev;
+        }, {});
+}
+
 module.exports = {
     readAsArray,
     readAsArrayOfNumbers,
@@ -96,4 +126,5 @@ module.exports = {
     readDay4Input,
     readDay5Input,
     readDay8Input,
+    readDay12Input
 };
