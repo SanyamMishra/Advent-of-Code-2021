@@ -118,6 +118,39 @@ async function readDay12Input(inputType) {
         }, {});
 }
 
+async function readDay13Input(inputType) {
+    let fileData = await fs.readFile(
+        path.join(__dirname, 'src', dayChosen, `input.${inputType}.txt`),
+        { encoding: 'utf8' }
+    );
+
+    const [dotsData, foldData] = fileData.split('\r\n\r\n')
+        .map(data => data.split('\r\n'));
+
+    const dotsMap = {};
+
+    dotsData.map(data => data.split(',')).forEach(dot => {
+        const x = dot[0];
+        const y = dot[1];
+
+        if (dotsMap[x] === undefined) {
+            dotsMap[x] = {};
+        }
+
+        dotsMap[x][y] = '#';
+    });
+
+    const foldInstructions = foldData.map(data => {
+        const [, axis, lineNumber] = data.match(/fold along (x|y)=(\d+)/);
+        return {
+            axis,
+            lineNumber
+        };
+    });
+
+    return [dotsMap, foldInstructions];
+}
+
 module.exports = {
     readAsArray,
     readAsArrayOfNumbers,
@@ -126,5 +159,6 @@ module.exports = {
     readDay4Input,
     readDay5Input,
     readDay8Input,
-    readDay12Input
+    readDay12Input,
+    readDay13Input
 };
