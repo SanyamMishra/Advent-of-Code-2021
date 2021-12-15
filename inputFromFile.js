@@ -151,6 +151,32 @@ async function readDay13Input(inputType) {
     return [dotsMap, foldInstructions];
 }
 
+async function readDay14Input(inputType) {
+    let fileData = await fs.readFile(
+        path.join(__dirname, 'src', dayChosen, `input.${inputType}.txt`),
+        { encoding: 'utf8' }
+    );
+
+    const [polymerTemplateData, pairInsertionRulesData] = fileData.split('\r\n\r\n');
+
+    const pairInsertionRulesMap = {};
+
+    pairInsertionRulesData.split('\r\n')
+        .forEach(pairInsertionRuleData => {
+            const matchData = pairInsertionRuleData.match(/([A-Z][A-Z]) -> ([A-Z])/);
+
+            pairInsertionRulesMap[matchData[1]] = matchData[2];
+        });
+
+    const pairInsertionRulesFrequency = Object.fromEntries(Object.keys(pairInsertionRulesMap).map(rule => [rule, 0]));
+
+    for (let i = 1; i < polymerTemplateData.length; i++) {
+        pairInsertionRulesFrequency[`${polymerTemplateData[i - 1]}${polymerTemplateData[i]}`]++;
+    }
+
+    return [pairInsertionRulesMap, pairInsertionRulesFrequency];
+}
+
 module.exports = {
     readAsArray,
     readAsArrayOfNumbers,
@@ -160,5 +186,6 @@ module.exports = {
     readDay5Input,
     readDay8Input,
     readDay12Input,
-    readDay13Input
+    readDay13Input,
+    readDay14Input
 };
